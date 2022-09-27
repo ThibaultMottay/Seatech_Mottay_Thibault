@@ -4,20 +4,20 @@
  *
  * Created on 27 septembre 2022, 14:48
  */
-
 #ifndef ROBOT_H
-#define	ROBOT_H
+#define ROBOT_H
 
-#ifdef	__cplusplus
-extern "C" {
-#endif
+typedef struct robotStateBITS {
+    union {
+        struct {
+            unsigned char taskEnCours;
+            float vitesseGaucheConsigne;
+            float vitesseGaucheCommandeCourante;
+            float vitesseDroiteConsigne;
+            float vitesseDroiteCommandeCourante;
+        };
+    };
+}ROBOT_STATE_BITS;
+extern volatile ROBOT_STATE_BITS robotState;
 
-
-
-
-#ifdef	__cplusplus
-}
-#endif
-
-#endif	/* ROBOT_H */
-
+#endif 
