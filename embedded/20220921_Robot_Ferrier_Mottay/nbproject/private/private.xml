@@ -2,6 +2,22 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/ChipConfig.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/IO.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/PWM.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/Robot.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/timer.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/ToolBox.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/ADC.h</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/ChipConfig.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/IO.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/main.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/PWM.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/Robot.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/timer.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/ToolBox.c</file>
+            <file>file:/C:/GitHub/Seatech_Mottay_Thibault/embedded/20220921_Robot_Ferrier_Mottay/ADC.c</file>
+        </group>
     </open-files>
 </project-private>
