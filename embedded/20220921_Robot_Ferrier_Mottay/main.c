@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <xc.h>
+#include <libpic30.h>
 #include "ChipConfig.h"
 #include "IO.h"
 #include "timer.h"
@@ -15,6 +16,7 @@
 #include "ADC.h"
 #include "Robot.h"
 #include "main.h"
+#include "UART.h"
 unsigned int ADCValue0;
 unsigned int ADCValue1;
 unsigned int ADCValue2;
@@ -25,7 +27,8 @@ int main(void) {
     //Initialisation de l?oscillateur
     /****************************************************************************************************/
     InitOscillator();
-
+    
+    InitUART();
     /****************************************************************************************************/
     // Configuration des entrées sorties
     /****************************************************************************************************/
@@ -41,11 +44,14 @@ int main(void) {
     InitPWM();
     InitADC1();
     resetTimeStamp();
-    //PWMSetSpeed(0,2);
+    // PWMSetSpeed(0,2);
     /****************************************************************************************************/
     // Boucle Principale
     /****************************************************************************************************/
     while (1) {
+        SendMessageDirect((unsigned char*) "Bonjour", 7);
+        __delay32(40000000);
+        
         if (ADCIsConversionFinished()==1){
             ADCClearConversionFinishedFlag();
             /*unsigned int * result = ADCGetResult();
@@ -92,7 +98,8 @@ int main(void) {
                 LED_ORANGE = 0;
             }
         }
-xc13    } // fin main
+//xc13    
+    } // fin main
 }
 
   /****************************************************************************************************/
@@ -178,6 +185,7 @@ xc13    } // fin main
                 break;
         }
     }
+    
 // Etat Suivant
     unsigned char nextStateRobot = 0;
 
