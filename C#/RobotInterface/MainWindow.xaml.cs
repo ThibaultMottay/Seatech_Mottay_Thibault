@@ -30,7 +30,7 @@ namespace RobotInterface
         public MainWindow()
         {
             InitializeComponent();
-            serialPort1 = new ReliableSerialPort("COM6", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM12", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
             /// Mise en place du timer
@@ -144,6 +144,71 @@ namespace RobotInterface
             byte checksum = CalculateChecksum(msgFunction, msgPayloadLength, msgPayload);
             byteList[pos++] = checksum;
             serialPort1.Write(byteList, 0, pos);
+        }
+        public enum StateReception
+        {
+            Waiting,
+            FunctionMSB,
+            FunctionLSB,
+            PayloadLengthMSB,
+            PayloadLengthLSB,
+            Payload,
+            CheckSum
+        }
+        StateReception rcvState = StateReception.Waiting;
+        int msgDecodedFunction = 0;
+        int msgDecodedPayloadLength = 0;
+        byte[] msgDecodedPayload;
+        int msgDecodedPayloadIndex = 0;
+        private void DecodeMessage(byte c)
+        {
+            switch (rcvState)
+            {
+                case StateReception.Waiting:
+                    if (c == 0xFE)
+                        rcvState = StateReception.FunctionMSB;
+                    break;
+                case StateReception.FunctionMSB:
+                    msgDecodedFunction = c << 8;
+                    rcvState = StateReception.FunctionLSB;
+                    break;
+                case StateReception.FunctionLSB:
+                    msgDecodedFunction += c << 0;
+                    rcvState = StateReception.PayloadLengthMSB;
+                    break;
+                case StateReception.PayloadLengthMSB:
+                    msgDecodedPayloadLength = c << 8;
+                    rcvState = StateReception.PayloadLengthLSB;
+                    break;
+                case StateReception.PayloadLengthLSB:
+                    msgDecodedPayloadLength += c << 0;
+                    if (msgDecodedPayloadLength == 0)
+                        rcvState = StateReception.CheckSum;
+                    else
+                    {
+                        rcvState = StateReception.Payload;
+                        msgDecodedPayload = new byte[msgDecodedPayloadLength];
+                        msgDecodedPayloadIndex = 0;
+                    }
+                    break;
+                case StateReception.Payload:                    
+                        msgDecodedPayload[msgDecodedPayloadIndex] = c;
+                        msgDecodedPayloadIndex++;
+                        if (msgDecodedPayloadIndex== msgDecodedPayloadLength)
+                            rcvState = StateReception.CheckSum;
+                    break;
+                case StateReception.CheckSum:
+                    ...
+                    if (calculatedChecksum == receivedChecksum)
+                    {
+                        //Success, on a un message valide
+                    }
+                    ...
+                    break;
+                default:
+                    rcvState = StateReception.Waiting;
+                    break;
+            }
         }
 
 
