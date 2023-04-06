@@ -30,7 +30,7 @@ namespace RobotInterface
         public MainWindow()
         {
             InitializeComponent();
-            serialPort1 = new ReliableSerialPort("COM12", 115200, Parity.None, 8, StopBits.One);
+            serialPort1 = new ReliableSerialPort("COM4", 115200, Parity.None, 8, StopBits.One);
             serialPort1.DataReceived += SerialPort1_DataReceived;
             serialPort1.Open();
             /// Mise en place du timer
@@ -53,7 +53,10 @@ namespace RobotInterface
 
             while(robot.byteListReceived.Count > 0)
             {
-                textBoxReception.Text+="0x" + robot.byteListReceived.Dequeue().ToString("X2") + " ";  
+                //textBoxReception.Text+="0x" + robot.byteListReceived.Dequeue().ToString("X2") + " ";
+                var c = robot.byteListReceived.Dequeue();
+                DecodeMessage(c);
+
             }
         }
 
@@ -110,6 +113,10 @@ namespace RobotInterface
             string s = "Bonjour";
             byte[] Payload = Encoding.ASCII.GetBytes(s);
             UartEncodeAndSendMessage( msgfunction, Payload.Length, Payload);
+            UartEncodeAndSendMessage(0x0020, 2, new byte[] { 1, 1 });
+            UartEncodeAndSendMessage(0x0030, 3, new byte[] { 25, 64, 75 });
+
+
         }
         // Implantation d'un message
         // Calcul de la checksum
@@ -194,23 +201,39 @@ namespace RobotInterface
                 case StateReception.Payload:                    
                         msgDecodedPayload[msgDecodedPayloadIndex] = c;
                         msgDecodedPayloadIndex++;
-                        if (msgDecodedPayloadIndex== msgDecodedPayloadLength)
+                        if (msgDecodedPayloadIndex >= msgDecodedPayloadLength)
                             rcvState = StateReception.CheckSum;
                     break;
                 case StateReception.CheckSum:
-                    ...
-                    if (calculatedChecksum == receivedChecksum)
+                    byte receivedChecksum = c;
+                    if (CalculateChecksum(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload) == receivedChecksum)
                     {
                         //Success, on a un message valide
+                        textBoxReception.Text += "message valide";
+                        ProcessDecodedMessage(msgDecodedFunction, msgDecodedPayloadLength, msgDecodedPayload);
                     }
-                    ...
+                    else textBoxReception.Text += "message invalide";
+                    rcvState = StateReception.Waiting;
                     break;
                 default:
                     rcvState = StateReception.Waiting;
                     break;
             }
         }
-
+        void ProcessDecodedMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
+        {
+            switch (msgFunction)
+            {
+                case 0x0080:
+                    break;
+                case 0x0020:
+                    break;
+                case 0x0030:
+                    break;
+                case 0x0040:
+                    break;
+            }
+        }
 
     }
 }
