@@ -225,12 +225,33 @@ namespace RobotInterface
             switch (msgFunction)
             {
                 case 0x0080:
+                    LabelTransmissionDeTexte.Content = System.Text.Encoding.ASCII.GetString(msgPayload);
                     break;
                 case 0x0020:
+                    switch(msgPayload[0])
+                    {
+                        case 0:
+                            if (msgPayload[1] == 1) { Led1.IsChecked = true; }
+                            else { Led1.IsChecked = false; };
+                            break;
+                        case 1:
+                            if (msgPayload[1] == 1) { Led2.IsChecked = true; }
+                            else { Led2.IsChecked = false; };
+                            break;
+                        case 2:
+                            if (msgPayload[1] == 1) { Led3.IsChecked = true; }
+                            else { Led3.IsChecked = false; };
+                            break;
+                    }
                     break;
                 case 0x0030:
+                    LabelIRGauche.Content = "IR Gauche = " + msgPayload[0].ToString() + " cm";
+                    LabelIRCentre.Content = "IR Centre = " + msgPayload[1].ToString() + " cm";
+                    LabelIRDroit.Content = "IR Droit = " + msgPayload[2].ToString() + " cm";
                     break;
                 case 0x0040:
+                    LabelVitesseGauche.Content = "Vitesse Gauche = " + msgPayload[0].ToString() + " %";
+                    LabelVitesseDroit.Content = "Vitesse Droit = " + msgPayload[1].ToString() + " %";
                     break;
             }
         }

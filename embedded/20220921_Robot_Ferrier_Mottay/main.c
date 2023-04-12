@@ -19,6 +19,7 @@
 #include "UART.h"
 #include "CB_TX1.h"
 #include "CB_RX1.h"
+#include "UART_Protocol.h"
 unsigned int ADCValue0;
 unsigned int ADCValue1;
 unsigned int ADCValue2;
@@ -51,8 +52,10 @@ int main(void) {
     // Boucle Principale
     /****************************************************************************************************/
     while (1) {
+        unsigned char payload[] = {'B', 'o', 'n', 'j', 'o', 'u', 'r'};
+        UartEncodeAndSendMessage( 0x0080, 7, payload);
         //SendMessageDirect((unsigned char*) "Bonjour", 7);
-        //__delay32(40000000);
+        __delay32(40000000);
         //SendMessage((unsigned char*) "Bonjour", 7);
         //__delay32(40000000);
         int i;
