@@ -220,6 +220,27 @@ namespace RobotInterface
                     break;
             }
         }
+        public enum StateRobot
+        {
+            STATE_ATTENTE = 0,
+            STATE_ATTENTE_EN_COURS = 1,
+            STATE_AVANCE = 2,
+            STATE_AVANCE_EN_COURS = 3,
+            STATE_TOURNE_GAUCHE = 4,
+            STATE_TOURNE_GAUCHE_EN_COURS = 5,
+            STATE_TOURNE_DROITE = 6,
+            STATE_TOURNE_DROITE_EN_COURS = 7,
+            STATE_TOURNE_SUR_PLACE_GAUCHE = 8,
+            STATE_TOURNE_SUR_PLACE_GAUCHE_EN_COURS = 9,
+            STATE_TOURNE_SUR_PLACE_DROITE = 10,
+            STATE_TOURNE_SUR_PLACE_DROITE_EN_COURS = 11,
+            STATE_ARRET = 12,
+            STATE_ARRET_EN_COURS = 13,
+            STATE_RECULE = 14,
+            STATE_RECULE_EN_COURS = 15,
+            STATE_RETOUR = 16
+        }
+
         void ProcessDecodedMessage(int msgFunction, int msgPayloadLength, byte[] msgPayload)
         {
             switch (msgFunction)
@@ -252,6 +273,12 @@ namespace RobotInterface
                 case 0x0040:
                     LabelVitesseGauche.Content = "Vitesse Gauche = " + msgPayload[0].ToString() + " %";
                     LabelVitesseDroit.Content = "Vitesse Droit = " + msgPayload[1].ToString() + " %";
+                    break;
+                case 0x0050:
+                    LabelEtape.Content = "Etape = " + ((StateRobot)(msgPayload[0])).ToString();
+                    int instant = (((int)msgPayload[1]) << 24) + (((int)msgPayload[2]) << 16) + (((int)msgPayload[3]) << 8) + ((int)msgPayload[4]);
+
+                    LabelTemps.Content ="instant courant = " + instant.ToString() + " ms";
                     break;
             }
         }

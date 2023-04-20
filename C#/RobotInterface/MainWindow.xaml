@@ -47,9 +47,15 @@
                     <Label x:Name="LabelVitesseDroit"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Transmission de texte" Width="445" Margin="0,0,0,10">
-                <StackPanel Orientation="Vertical" Margin="0,0,0,-23">
+            <GroupBox Header="Transmission de texte" Width="220" Margin="0,0,0,10">
+                <StackPanel Orientation="Vertical" Margin="0,0,0,-13">
                     <Label x:Name="LabelTransmissionDeTexte"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Etape" Width="220" Margin="0,0,0,10">
+                <StackPanel Orientation="Vertical" Margin="0,0,0,-13">
+                    <Label x:Name="LabelEtape"/>
+                    <Label x:Name="LabelTemps"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
